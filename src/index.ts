@@ -31,6 +31,4 @@ class Reminder {
     message: string;
     tag: string;
     toggelComplete: boolean;
-
-    
 }
