@@ -28,55 +28,70 @@
 
 import { question } from 'readline-sync';
 
-class Reminders {
+class Reminder {
     message: string;
     tag: string;
-    toggelComplete: boolean;
+    toggleComplete: boolean;
 
     constructor(msg: string, tag: string) {
         this.message = msg;
         this.tag = tag;
-        this.toggelComplete = false;
+        this.toggleComplete = false;
     }
-}
-
-function queryMenu () {
-    let response = question('Hit the [Enter] key to see main menu: ');
-    return response;
 }
 
 function mainMenu () {
-    let response = question('Hit the [Enter] key to see main menu: ');
-
-    if (response != "") {
-        console.log('Invalid input');
-    } else {
-        console.log(
-            `
-            ------------------------------
-            |      Reminders menu:       |
-            ------------------------------
-            |  [1] Show all reminders 👀  
-            |  [2] Search reminders 🔎    
-            |  [3] Add reminder ✏️        
-            |  [4] Modify reminders ✍️   
-            |  [5] Toggle completion ⭕️ 🔴  
-            |  [6] Exit 👋                
-            ------------------------------`
-        );
+    let response = "1";
+    while (response != "") {
+        response = question('Hit the [Enter] key to see main menu: ');
+        if (response != "") {
+            console.log('Invalid input');
+        } else {
+            console.log(
+                `
+                ------------------------------
+                |      Reminders menu:       |
+                ------------------------------
+                |  [1] Show all reminders 👀  
+                |  [2] Search reminders 🔎    
+                |  [3] Add reminder ✏️        
+                |  [4] Modify reminders ✍️   
+                |  [5] Toggle completion ⭕️ 🔴  
+                |  [6] Exit 👋                
+                ------------------------------`
+            );
+            run();
+        } 
     }
 }
 
-mainMenu();
+
 
 function run() {
+    let v = false;
+    while (v == false) {
+        let response = question('Please select a menu option: ');
+        switch (response) {
+            case '3': 
+                newReminder();
+                v = true;
+                break;
+            default: 
+                console.log('Invalid input');
+        }
+    }
+}
+
+function newReminder () {
+    let msg = question('Please enter a reminder message: ');
+    let tag = question('Please enter a tag for your reminder: ');
+
+    let reminder = new Reminder (msg,tag);
     
+    console.log (reminder)
 }
 
-function newFunction () {
-
-}
-
+mainMenu();
 
 // let test = new Reminders('Wake up', 'morning');
 
