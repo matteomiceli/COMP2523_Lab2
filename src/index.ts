@@ -40,6 +40,8 @@ class Reminder {
     }
 }
 
+let testArr: Reminder[] = [];
+
 function mainMenu () {
     let response = "1";
     while (response != "") {
@@ -72,10 +74,14 @@ function run() {
     while (v == false) {
         let response = question('Please select a menu option: ');
         switch (response) {
+            // case '2': 
+            //     searchReminders();
+            //     break;
             case '3': 
                 newReminder();
                 v = true;
                 break;
+
             default: 
                 console.log('Invalid input');
         }
@@ -87,9 +93,11 @@ function newReminder () {
     let tag = question('Please enter a tag for your reminder: ');
 
     let reminder = new Reminder (msg,tag);
-    
-    console.log (reminder)
+
+    testArr.push(reminder);
 }
+
+
 
 mainMenu();
 
