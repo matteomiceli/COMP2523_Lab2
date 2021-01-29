@@ -28,6 +28,22 @@ class Reminder {
         this.tag = tag;
         this.toggleComplete = false;
     }
+
+    reminderCheck() {
+        if (this.toggleComplete != true) {
+            console.log(`
+            Reminder: ${this.message}
+            Tag: ${this.tag}
+            ⬜
+            `)
+        } else {
+            console.log(`
+            Reminder: ${this.message}
+            Tag: ${this.tag}
+            ☑️
+            `)
+        }
+    }
 }
 
 let reminderArr: Reminder[] = [];
@@ -52,7 +68,7 @@ function mainMenu() {
                 |  [6] Exit 👋                
                 ------------------------------
                 `
-            )
+            );
             run();
         }
     }
@@ -87,8 +103,15 @@ function run() {
 
 // Option [1] -- Lists out all reminders
 function listReminders(array: Reminder[]) {
-    console.log(array); // Format this text to make more sense
-    mainMenu();
+    if (array.length == 0) {
+        console.log('No reminders...');
+        mainMenu();
+    } else {
+        array.forEach(reminder => {
+            (reminder.reminderCheck());
+        })
+        mainMenu();
+    }
 }
 
 // Option [3] -- Creates new reminderand pushes it to reminderArray
