@@ -30,27 +30,33 @@ class Reminder {
     }
 
     reminderCheck() {
-        if (this.toggleComplete != true) {
+        if (this.toggleComplete == false) {
             console.log(`
-            Reminder: ${this.message}
+            Reminder: ${this.message}   ⬜
             Tag: ${this.tag}
-            ⬜
             `)
-        } else {
+        } else if (this.toggleComplete == true) {
             console.log(`
-            Reminder: ${this.message}
+            Reminder: ${this.message}   ✅  
             Tag: ${this.tag}
-            ☑️
             `)
         }
     }
 
-    booleanSwitch(markVal: ) {
-        let toggle = this.toggleComplete;
-        if (markVal) {
-            toggle = true;
-        } else {
-            toggle = false;
+    // Reminder Modifier -- [boolean switch, msg edit, tag edit]
+    msgEdit(msg: string) {
+        this.message = msg;
+    }
+
+    tagEdit(tag: string) {
+        this.tag = tag;
+    }
+
+    booleanSwitch(markDone: boolean) {
+        if (markDone == true) {
+            this.toggleComplete = false;
+        } else if (markDone == false) {
+            this.toggleComplete = true;
         }
     }
 }
@@ -89,8 +95,9 @@ function run() {
     while (v == false) {
         let response = question('Please select a menu option: ');
         switch (response) {
-            case '1': 
+            case '1':
                 listReminders(reminderArr);
+                mainMenu();
                 v = true;
                 break;
             // case '2': 
@@ -100,10 +107,16 @@ function run() {
                 newReminder();
                 v = true;
                 break;
-            case '6': 
+            case '4':
+                chooseReminder(reminderArr);
+                // chooseReminder(reminderArr);
                 v = true;
                 break;
-
+            case '5':
+            //
+            case '6':
+                v = true;
+                break;
             default:
                 console.log('Invalid input');
         }
@@ -116,10 +129,10 @@ function listReminders(array: Reminder[]) {
         console.log('No reminders...');
         mainMenu();
     } else {
-        array.forEach(reminder => {
-            (reminder.reminderCheck());
-        })
-        mainMenu();
+        for (let i = 0; i < array.length; i++) {
+            console.log(`   Reminder [${i + 1}]:`)
+            array[i].reminderCheck();
+        }
     }
 }
 
@@ -138,16 +151,79 @@ function newReminder() {
             reminderArr.push(reminder);
             console.log(`New reminder added!`);
             v = true;
-        } else if (yesNoCase) {
+        } else if (yesNoCase == 'n') {
             console.log('Reminder deleted');
             v = true;
         }
         else {
-            console.log(`Please enter a valid input of either 'y' or 'n'...`)
+            console.log(`Please enter a valid input of either 'y' or 'n'...`);
         }
     }
     mainMenu();
 }
+
+// Option [4] -- Choose Reminder
+function chooseReminder(array: Reminder[]) {
+    let reminder = new Reminder('', '');
+
+    let v = false;
+    while (v == false) {
+        console.log(`
+        Please choose a reminder to modify: 
+        `);
+        listReminders(array);
+        let modReminder = question('Please input the [number] of the reminder you would like to modify: ');
+        let modNum = parseInt(modReminder)
+        if (modNum <= array.length) {
+            reminder = array[modNum - 1];
+            v = true;
+        } else {
+            console.log('Please enter a valid input...');
+        }
+    }
+
+    console.log(typeof (reminder))
+    console.log(`
+    ------------------------------
+    |      Reminders menu:       |
+    ------------------------------
+    |  [1] Modify Message 
+    |  [2] Modify Tag    
+    |  [3] Toggle Complete                        
+    ------------------------------
+    `);
+
+    let s = false;
+    while (s == false) {
+        let response = question('Please select a menu option: ');
+        switch (response) {
+            case '1':
+                let newMsg = question('Type a new reminder message: ');
+                reminder.msgEdit(newMsg);
+                s = true;
+                break;
+            case '2':
+                let newTag = question('Type a new reminder message: ');
+                reminder.tagEdit(newTag);
+                s = true;
+                break;
+            case '3':
+                reminder.booleanSwitch(reminder.toggleComplete);
+                console.log(reminder.toggleComplete);
+                s = true;
+                break;
+            default:
+                console.log('Invalid input');
+        }
+    }
+    mainMenu();
+}
+
+// Option [5] -- Boolean switcher
+function markComplete() {
+
+}
+
 
 mainMenu();
 
