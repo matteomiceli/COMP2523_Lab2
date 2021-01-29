@@ -101,7 +101,7 @@ function run() {
                 mainMenu();
                 v = true;
                 break;
-            case '2': 
+            case '2':
                 searchReminders(reminderArr);
                 v = true;
                 break;
@@ -143,7 +143,7 @@ function searchReminders(array: Reminder[]) {
     let search = question('Search by keyword: ');
     let searchLower = search.toLocaleLowerCase();
 
-    let s = true;
+    let s;
 
     array.forEach(reminder => {
         if (reminder.message.includes(searchLower) || reminder.tag.includes(searchLower)) {
@@ -153,10 +153,10 @@ function searchReminders(array: Reminder[]) {
         }
     });
 
-    if (s = false) {
+    if (s == false) {
         console.log('No matches...');
     }
-    
+
     mainMenu();
 }
 
@@ -233,7 +233,6 @@ function chooseReminder(array: Reminder[]) {
                 break;
             case '3':
                 reminder.booleanSwitch(reminder.toggleComplete);
-                console.log(reminder.toggleComplete);
                 s = true;
                 break;
             default:
@@ -273,9 +272,7 @@ function markComplete(array: Reminder[]) {
     mainMenu();
 }
 
-
-mainMenu();
-
-// let test = new Reminders('Wake up', 'morning');
-
-// console.log(test);
+export {
+    run, mainMenu, listReminders, searchReminders, newReminder,
+    chooseReminder, markComplete
+}
