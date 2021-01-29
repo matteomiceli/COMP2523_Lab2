@@ -61,6 +61,7 @@ class Reminder {
     }
 }
 
+// Where all new reminders go when they're born 
 let reminderArr: Reminder[] = [];
 
 // Launches main menu -- start of program, ties to run function which handles all other menu option function
@@ -100,9 +101,10 @@ function run() {
                 mainMenu();
                 v = true;
                 break;
-            // case '2': 
-            //     searchReminders();
-            //     break;
+            case '2': 
+                searchReminders(reminderArr);
+                v = true;
+                break;
             case '3':
                 newReminder();
                 v = true;
@@ -113,7 +115,7 @@ function run() {
                 v = true;
                 break;
             case '5':
-            //
+                markComplete(reminderArr);
             case '6':
                 v = true;
                 break;
@@ -134,6 +136,28 @@ function listReminders(array: Reminder[]) {
             array[i].reminderCheck();
         }
     }
+}
+
+// Option [2] -- Search Reminders
+function searchReminders(array: Reminder[]) {
+    let search = question('Search by keyword: ');
+    let searchLower = search.toLocaleLowerCase();
+
+    let s = true;
+
+    array.forEach(reminder => {
+        if (reminder.message.includes(searchLower) || reminder.tag.includes(searchLower)) {
+            reminder.reminderCheck();
+        } else {
+            s = false;
+        }
+    });
+
+    if (s = false) {
+        console.log('No matches...');
+    }
+    
+    mainMenu();
 }
 
 // Option [3] -- Creates new reminderand pushes it to reminderArray
@@ -220,8 +244,33 @@ function chooseReminder(array: Reminder[]) {
 }
 
 // Option [5] -- Boolean switcher
-function markComplete() {
+function markComplete(array: Reminder[]) {
+    let reminder = new Reminder('', '');
 
+    let v = false;
+    while (v == false) {
+        console.log(`
+        Please choose a reminder to modify: 
+        `);
+        listReminders(array);
+        let modReminder = question('Please input the [number] of the reminder you would like to modify: ');
+        let modNum = parseInt(modReminder)
+        if (modNum <= array.length) {
+            reminder = array[modNum - 1];
+            v = true;
+        } else {
+            console.log('Please enter a valid input...');
+        }
+    }
+
+    reminder.booleanSwitch(reminder.toggleComplete);
+    if (reminder.toggleComplete == true) {
+        console.log(`Reminder ${reminder.message} marked complete...`);
+    } else {
+        console.log(`Reminder ${reminder.message} marked incomplete...`);
+    }
+
+    mainMenu();
 }
 
 
