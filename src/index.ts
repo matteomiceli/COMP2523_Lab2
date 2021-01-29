@@ -44,6 +44,15 @@ class Reminder {
             `)
         }
     }
+
+    booleanSwitch(markVal: ) {
+        let toggle = this.toggleComplete;
+        if (markVal) {
+            toggle = true;
+        } else {
+            toggle = false;
+        }
+    }
 }
 
 let reminderArr: Reminder[] = [];
