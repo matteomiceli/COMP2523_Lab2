@@ -208,13 +208,13 @@ function chooseReminder(array: Reminder[]) {
 
     console.log(typeof (reminder))
     console.log(`
-    ------------------------------
-    |      Reminders menu:       |
-    ------------------------------
+    -------------------------------
+    | How do you want to modify?: |
+    -------------------------------
     |  [1] Modify Message 
     |  [2] Modify Tag    
     |  [3] Toggle Complete                        
-    ------------------------------
+    -------------------------------
     `);
 
     let s = false;
